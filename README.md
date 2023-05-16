@@ -1,1 +1,7 @@
-# my_airbnb_v2
+# Airbnb clone
+# description
+# how to start it
+# how to use it
+# examples
+
+# Authors
