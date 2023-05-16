@@ -47,11 +47,59 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            obj = eval(arg)()
-            obj.save()
-            print(obj.id)
+            params = self.parse_params(arg)
+            if len(params) == 0:
+                print("** class name missing **")
+                return
+            class_name = params.pop('class_name')
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            obj_class = eval(class_name)()  # dynamic class instantiation
+            for key, value in params.items():
+                setattr(obj_class, key, value)
+            obj_class.save()
+            print(obj_class.id)
+
         except NameError:
             print("** class doesn't exist **")
+
+    def parse_params(self, arg):
+        """
+            parse the given parameters and return a dictionary
+        """
+        params = {}
+        arg_parts = arg.split()
+        params['class_name'] = arg_parts[0]
+        for part in arg_parts:
+            if '=' in part:
+                key, value = part.split('=')
+                value = self.process_value(value)
+                if key and value:
+                    params[key] = value
+        return params
+
+    def process_value(self, value):
+        """
+            Process the given value into the appropriate type
+        """
+        if value.startswith('"') and value.endswith('"'):
+            # for string values
+            value = value[1:-1].replace('_', ' ')
+        elif '.' in value:
+            # Float values
+            try:
+                value = float(value)
+            except ValueError:
+                value = None
+        else:
+            # Integer value
+            try:
+                value = int(value)
+            except ValueError:
+                value = None
+        return value
+
 
     def do_show(self, arg):
         """

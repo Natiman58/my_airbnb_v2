@@ -50,6 +50,11 @@ class TestConsole(TestCase):
             self.assertFalse(HBNBCommand().onecmd("create MyModel"))
             self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
 
+        # when the parameters are added and class name is wrong
+        with mock.patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("create MyModel name='California' city_id='1234' location='USA'"))
+            self.assertEqual(f.getvalue(), "** class doesn't exist **\n")
+
         # to theck it's output is uuid format
         with mock.patch('sys.stdout', new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
