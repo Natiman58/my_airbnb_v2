@@ -3,17 +3,28 @@
     A module for the City class
 """
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from datetime import datetime
 import json
 
+import sqlalchemy
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import relationship
 
-class City(BaseModel):
+
+class City(BaseModel, Base):
     """
         A city class representing a city object
     """
-    state_id = ""
-    name = ""
+    __tablename__ = 'cities'
+    name = Column(String(128), nullable=False)
+
+    # establish one to many relationship
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+    # and make the other side many to one; bidirectional relationship
+    state = relationship("State", back_populates="cities")
+
+
 
     def all(self):
         """

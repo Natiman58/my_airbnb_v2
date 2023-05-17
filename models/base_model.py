@@ -4,12 +4,23 @@
 """
 from uuid import uuid4
 from datetime import datetime
-#from models import storage
+import sqlalchemy
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
 
 class BaseModel:
     """
         A base model for all the objects
     """
+
+    id = Column(String(60), primary_key=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+
+
     def __init__(self, *args, **kwargs):
         from models import storage
         if kwargs:
@@ -21,7 +32,7 @@ class BaseModel:
         else:
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.now()
-            storage.new(self)
+            #storage.new(self) removed
 
     def __str__(self):
         """
@@ -34,6 +45,7 @@ class BaseModel:
         """updates the updated at attribute with the current datetime"""
         from models import storage
         self.updated_at = datetime.now()
+        storage.new(self)  # moved to here
         storage.save()
     
     def to_dict(self):
@@ -41,9 +53,16 @@ class BaseModel:
             returns all the attributes in the class obj
         """
         d = self.__dict__.copy()
+        if '_sa_instance_state' in d:
+            del d['_sa_instance_state']
         d['__class__'] = self.__class__.__name__
         d['created_at'] = self.created_at.isoformat()
         d['updated_at'] = self.updated_at.isoformat()
         return d
 
-    
+    def delete(self):
+        """
+            To delete the current instance from the storage(models.storage)
+        """
+        from models import storage
+        storage.delete(self)
