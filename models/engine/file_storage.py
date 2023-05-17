@@ -30,11 +30,22 @@ class FileStorage:
         "Review": Review
     }
     
-    def all(self):
+    def all(self, cls=None):
         """
             returns all the objects
         """
-        return self.__objects
+        if cls:
+            obj_dict = {}
+            for key, value in self.__objects.items():
+                class_name = key.split('.')[0]
+                input_cls_name = str(cls).split('.')[2].strip()[:-2]
+                if(input_cls_name == class_name):
+                    obj_dict[key] = value
+            return obj_dict
+
+        # if cls is none
+        else:
+            return self.__objects
     
     def new(self, obj):
         """
@@ -81,3 +92,14 @@ class FileStorage:
                 pass
         except FileNotFoundError:
             pass
+
+    def delete(self, obj=None):
+        """
+            updates FS_storage to delete objs from __objects
+            using the given class name and id
+        """
+        if obj is None:
+            return
+        key = obj.__class__.__name__ + '.' +  obj.id
+        if key in self.__objects:
+            del self.__objects[key]
