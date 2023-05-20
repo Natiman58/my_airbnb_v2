@@ -17,8 +17,11 @@ class State(BaseModel, Base):
     """
     __tablename__='states'
     name = Column(String(128), nullable=False)
+
     if environ.get('HBNB_TYPE_STORAGE') == 'db':
+        # the reference from City object to State object is named "state"
         cities = relationship("City", cascade="all, delete", backref="state")
+
     elif environ.get('HBNB_TYPE_STORAGE') == 'fs':
         @property
         def cities(self):

@@ -156,12 +156,17 @@ class HBNBCommand(cmd.Cmd):
                 obj_dict.pop('__class__', None)
                 for key, value in obj_dict.items():
                     if key in ['created_at', 'updated_at']:
-                        date_format = '%Y-%m-%dT%H:%M:%S.%f'
-                        obj_dict[key] = datetime.strptime(value, date_format)
+                            date_format = ""
+                            date_obj = ""
+                            if date_format == '%Y-%m-%dT%H:%M:%S.%f':
+                                date_obj = datetime.strptime(value, date_format)
+                            elif date_format == '%Y-%m-%dT%H:%M:%S':
+                                date_obj = datetime.strptime(value, date_format)
                 obj_name = obj.__class__.__name__
                 obj_str = f"[{obj_name}] ({obj.id}) {obj_dict}"
                 obj_list.append(obj_str)
-            print(obj_list)
+                obj_list_str = str(obj_list).replace('"', '')  # remove the quotes
+            print(obj_list_str)
         else:
             args = arg.split()
             class_name = args[0]
@@ -172,13 +177,19 @@ class HBNBCommand(cmd.Cmd):
                     obj_dict.pop('__class__', None)
                     for key, value in obj_dict.items():
                         if key in ['created_at', 'updated_at']:
-                            date_format = '%Y-%m-%dT%H:%M:%S.%f'
-                            date_obj = datetime.strptime(value, date_format)
+                            date_format = ""
+                            date_obj = ""
+                            if date_format == '%Y-%m-%dT%H:%M:%S.%f':
+                                date_obj = datetime.strptime(value, date_format)
+                            elif date_format == '%Y-%m-%dT%H:%M:%S':
+                                date_obj = datetime.strptime(value, date_format)
                             obj_dict[key] = date_obj
                     obj_name = obj.__class__.__name__
-                    obj_str = f"[{obj_name}] ({obj.id}) {obj_dict}"
+                    obj_str = f"[{obj_name}]  ({obj.id})  {obj_dict}"
                     obj_list.append(obj_str)
-                print(obj_list)
+
+                obj_list_str = str(obj_list).replace('"', '')
+                print(obj_list_str)
             else:
                 print(" ** class doesn't exist ** ")
 

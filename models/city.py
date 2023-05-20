@@ -18,12 +18,8 @@ class City(BaseModel, Base):
     """
     __tablename__ = 'cities'
     name = Column(String(128), nullable=False)
-
-    # establish one to many relationship
     state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
-    # and make the other side many to one; bidirectional relationship
-    state = relationship("State", back_populates="cities")
-
+    #state = relationship("State", cascade="all, delete", backref="cities")
 
 
     def all(self):
