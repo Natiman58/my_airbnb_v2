@@ -19,7 +19,7 @@ class HBNBCommand(cmd.Cmd):
     """
         A class representing the console
     """
-    prompt = '(hbnb) '
+    prompt = '(hbnb) \n'
     classes = {
         'BaseModel': BaseModel,
         'User': User,
