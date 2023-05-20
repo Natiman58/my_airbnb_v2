@@ -48,9 +48,7 @@ class DBStorage:
         """
         objects = {}
         if cls:
-            print(cls)
             query = self.__session.query(cls)
-            print(query)
             for obj in query.all():
                 key = f"{type(obj).__name__}.{obj.id}"
                 objects[key] = obj
@@ -58,7 +56,6 @@ class DBStorage:
             classes = [State, City]
             for clss in classes:
                 query = self.__session.query(clss)
-                print(query)
                 for obj in query.all():
                     key = f"{type(obj).__name__}.{obj.id}"
                     objects[key] = obj

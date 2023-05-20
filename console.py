@@ -155,17 +155,15 @@ class HBNBCommand(cmd.Cmd):
                 obj_dict = obj.to_dict()
                 obj_dict.pop('__class__', None)
                 for key, value in obj_dict.items():
+                    value = value.split('.')[0] # remove the fraction seconds
                     if key in ['created_at', 'updated_at']:
-                            date_format = ""
-                            date_obj = ""
-                            if date_format == '%Y-%m-%dT%H:%M:%S.%f':
-                                date_obj = datetime.strptime(value, date_format)
-                            elif date_format == '%Y-%m-%dT%H:%M:%S':
-                                date_obj = datetime.strptime(value, date_format)
+                        date_format = '%Y-%m-%dT%H:%M:%S'
+                        date_obj = datetime.strptime(value, date_format)
+                        obj_dict[key] = date_obj
                 obj_name = obj.__class__.__name__
                 obj_str = f"[{obj_name}] ({obj.id}) {obj_dict}"
                 obj_list.append(obj_str)
-                obj_list_str = str(obj_list).replace('"', '')  # remove the quotes
+            obj_list_str = str(obj_list).replace('"', '')  # remove the quotes
             print(obj_list_str)
         else:
             args = arg.split()
@@ -176,18 +174,14 @@ class HBNBCommand(cmd.Cmd):
                     obj_dict = obj.to_dict()
                     obj_dict.pop('__class__', None)
                     for key, value in obj_dict.items():
+                        value = value.split('.')[0] # remove the fraction seconds
                         if key in ['created_at', 'updated_at']:
-                            date_format = ""
-                            date_obj = ""
-                            if date_format == '%Y-%m-%dT%H:%M:%S.%f':
-                                date_obj = datetime.strptime(value, date_format)
-                            elif date_format == '%Y-%m-%dT%H:%M:%S':
-                                date_obj = datetime.strptime(value, date_format)
+                            date_format = '%Y-%m-%dT%H:%M:%S'
+                            date_obj = datetime.strptime(value, date_format)
                             obj_dict[key] = date_obj
                     obj_name = obj.__class__.__name__
                     obj_str = f"[{obj_name}]  ({obj.id})  {obj_dict}"
                     obj_list.append(obj_str)
-
                 obj_list_str = str(obj_list).replace('"', '')
                 print(obj_list_str)
             else:
