@@ -149,6 +149,7 @@ class HBNBCommand(cmd.Cmd):
         """
         from models import storage
         obj_list = []
+        # if no argument
         if arg == "":
             all_objs = storage.all()
             for obj in all_objs.values():
@@ -172,17 +173,19 @@ class HBNBCommand(cmd.Cmd):
                 all_objs = storage.all()
                 for obj in all_objs.values():
                     obj_dict = obj.to_dict()
-                    obj_dict.pop('__class__', None)
-                    for key, value in obj_dict.items():
-                        value = value.split('.')[0] # remove the fraction seconds
-                        if key in ['created_at', 'updated_at']:
-                            date_format = '%Y-%m-%dT%H:%M:%S'
-                            date_obj = datetime.strptime(value, date_format)
-                            obj_dict[key] = date_obj
-                    obj_name = obj.__class__.__name__
-                    obj_str = f"[{obj_name}]  ({obj.id})  {obj_dict}"
-                    obj_list.append(obj_str)
-                obj_list_str = str(obj_list).replace('"', '')
+                    # select the state with specific class name
+                    if obj_dict['__class__'] == class_name:
+                        obj_dict.pop('__class__', None)
+                        for key, value in obj_dict.items():
+                            value = value.split('.')[0] # remove the fraction seconds
+                            if key in ['created_at', 'updated_at']:
+                                date_format = '%Y-%m-%dT%H:%M:%S'
+                                date_obj = datetime.strptime(value, date_format)
+                                obj_dict[key] = date_obj
+                        obj_name = obj.__class__.__name__
+                        obj_str = f"[{obj_name}] ({obj.id}) {obj_dict}"
+                        obj_list.append(obj_str)
+                    obj_list_str = str(obj_list).replace('"', '')
                 print(obj_list_str)
             else:
                 print(" ** class doesn't exist ** ")

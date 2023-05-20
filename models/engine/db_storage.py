@@ -37,7 +37,7 @@ class DBStorage:
             self.__engine = create_engine(f"mysql+mysqldb://{username}:{password}@{host}/{database}", pool_pre_ping=True)
             Base.metadata.drop_all(bind=self.__engine)
         else:
-            # else create the engine and then the tables using the engine
+            # else create the engine and then create the tables using the engine
             # dialect+driver://username:password@host:port/database
             self.__engine = create_engine(f"mysql+mysqldb://{username}:{password}@{host}/{database}", pool_pre_ping=True)
             Base.metadata.create_all(bind=self.__engine)
