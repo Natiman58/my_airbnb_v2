@@ -47,7 +47,7 @@ class BaseModel:
         self.updated_at = datetime.now()
         storage.new(self)  # moved to here
         storage.save()
-    
+
     def to_dict(self):
         """
             returns all the attributes in the class obj

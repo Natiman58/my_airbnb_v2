@@ -2,16 +2,21 @@
 """
     A module for Amenity class
 """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from datetime import datetime
 import json
+from sqlalchemy import Column, String, Table, ForeignKey
+from sqlalchemy.orm import relationship
+from os import getenv
 
-
-class Amenity(BaseModel):
+class Amenity(BaseModel, Base):
     """
         A class to represent an amenity object
     """
-    name = ""
+    __tablename__ = 'amenities'
+    name = Column(String(128), nullable=False)
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        place_amenities = relationship("Place", secondary="place_amenity", back_populates="amenities")
 
     def all(self):
         """

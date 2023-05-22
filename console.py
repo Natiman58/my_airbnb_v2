@@ -19,7 +19,7 @@ class HBNBCommand(cmd.Cmd):
     """
         A class representing the console
     """
-    prompt = '(hbnb) \n'
+    prompt = '(hbnb) '
     classes = {
         'BaseModel': BaseModel,
         'User': User,
@@ -156,8 +156,8 @@ class HBNBCommand(cmd.Cmd):
                 obj_dict = obj.to_dict()
                 obj_dict.pop('__class__', None)
                 for key, value in obj_dict.items():
-                    value = value.split('.')[0] # remove the fraction seconds
                     if key in ['created_at', 'updated_at']:
+                        value = value.split('.')[0] # remove the fraction seconds
                         date_format = '%Y-%m-%dT%H:%M:%S'
                         date_obj = datetime.strptime(value, date_format)
                         obj_dict[key] = date_obj
@@ -177,8 +177,8 @@ class HBNBCommand(cmd.Cmd):
                     if obj_dict['__class__'] == class_name:
                         obj_dict.pop('__class__', None)
                         for key, value in obj_dict.items():
-                            value = value.split('.')[0] # remove the fraction seconds
                             if key in ['created_at', 'updated_at']:
+                                value = value.split('.')[0] # remove the fraction seconds
                                 date_format = '%Y-%m-%dT%H:%M:%S'
                                 date_obj = datetime.strptime(value, date_format)
                                 obj_dict[key] = date_obj
