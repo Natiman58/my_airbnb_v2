@@ -35,7 +35,6 @@ class State(BaseModel, Base):
                     city_list.append(city)
             return city_list
 
-
     def all(self):
         """
             lists all the states only

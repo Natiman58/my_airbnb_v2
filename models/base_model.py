@@ -15,7 +15,6 @@ class BaseModel:
     """
         A base model for all the objects
     """
-
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
@@ -24,6 +23,8 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         from models import storage
         if kwargs:
+            if 'id' not in kwargs:
+                self.id = str(uuid4())
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
