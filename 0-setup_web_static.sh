@@ -67,7 +67,7 @@ fi
 
 # create a symbolic link called /data/web_static/current; if not exists
 if [ ! -L "data/web_static/current" ]; then
-    ln -s data/web_static/releases/test/ data/web_static/currentg
+    ln -s data/web_static/releases/test/ data/web_static/current
     echo "Created symbolic link: data/web_static/current"
 else
     # otherwise delete and recreate everytime

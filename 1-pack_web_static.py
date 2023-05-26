@@ -10,7 +10,7 @@ import os
 
 def do_pack():
     """
-        pacs the web_sttic files
+        compresses the web_sttic files for deployment
     """
     # current data and time in string format
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
