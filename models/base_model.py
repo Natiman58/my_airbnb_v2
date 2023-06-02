@@ -57,8 +57,10 @@ class BaseModel:
         if '_sa_instance_state' in d:
             del d['_sa_instance_state']
         d['__class__'] = self.__class__.__name__
-        d['created_at'] = self.created_at.isoformat()
-        d['updated_at'] = self.updated_at.isoformat()
+        if self.created_at is not None:
+            d['created_at'] = self.created_at.isoformat()
+        if self.updated_at is not None:
+            d['updated_at'] = self.updated_at.isoformat()
         return d
 
     def delete(self):
