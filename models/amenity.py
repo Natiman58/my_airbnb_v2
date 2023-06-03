@@ -14,6 +14,7 @@ class Amenity(BaseModel, Base):
         A class to represent an amenity object
     """
     __tablename__ = 'amenities'
+    __table_args__ = ({'mysql_default_charset': 'latin1'})
     name = Column(String(128), nullable=False)
     # many to many relation ship representation b/n place and amenity objects
     place_amenities = relationship("Place", secondary="place_amenity", viewonly=False, overlaps="amenities")
