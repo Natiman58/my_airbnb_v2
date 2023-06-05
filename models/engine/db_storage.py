@@ -95,3 +95,11 @@ class DBStorage:
         """
         self.__session.close()
 
+    def get(cls, id):
+        """
+            Retrieve the obj from the storage based on the given id
+        """
+        if cls is None or id is None:
+            return None
+        key = "{}.{}".format(cls.__class__.__name__, id)
+        return
