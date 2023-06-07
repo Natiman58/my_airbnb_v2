@@ -154,3 +154,42 @@ ul {
 .amenities .popover li:hover {
     background-color: #DDDDDD;
 }
+
+@media (max-width: 600px) {
+    header {
+        padding-left: 10%;
+    }
+    .container {
+        padding-left: 5%;
+        overflow-x: hidden;
+    }
+    .filters {
+        width: 90%;
+        margin: auto;
+        height: 70px;
+        color: white;
+        border: 1px solid #DDDDDD;
+        border-radius: 4px;
+        display: flex;
+        position: relative;
+    }
+    .popover {
+        width: 23%;
+        font-size: 15px;
+        display: none;
+        overflow-x: hidden;
+        padding-left: 2%;
+    }
+    .popover ul {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-left: -56%;
+        text-align: center;
+    }
+    h3 {
+        font-weight: 600;
+        margin-top: 10px;
+        margin-left: 28px;
+        text-align: left;
+    }
+}
